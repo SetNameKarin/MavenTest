@@ -46,18 +46,18 @@ public class HomePageHelper extends PageBase {
     }
 
 
-    public HomePageHelper filterEventsByHolidayShabbat() {
+    public HomePageHelper filterEventsByHoliday(String holiday) {
         // ----- to wait that select-element (filter by holiday) and all options are loaded ---
 
         waitUntilElementIsClickable(filterHolidays, 30);
         waitUntilAllElementsVisible(driver.findElements(By.xpath("//select[@name = 'selectholidays']/option")),30);
 
-        selectValueFromList(filterHolidays, "Shabbat");
+        selectValueFromList(filterHolidays, holiday);
 
 
         // ------ wait that filter "shabbat" is chosen -----
         waitUntilElementIsClickable(clearFilterButton,20);
-        waitUntilElementIsPresent(By.xpath("//option[@selected][@value = 'Shabbat']"),20);
+        waitUntilElementIsPresent(By.xpath("//option[@selected][@value = '"+ holiday + "']"),20);
 
         // ------ wait that all events by filter "shabbat" are loaded ----
        waitUntilAllElementsVisible(eventsList, 40);
@@ -66,11 +66,11 @@ public class HomePageHelper extends PageBase {
 
 
 
-    public Boolean allEventsBelongToHolidayShabbat() {
+    public Boolean allEventsBelongToHoliday(String holiday) {
             // --- verify that all holidays values are "Shabbat" ----
         int counter = 0;
         for (int i=0; i < listHolidays.size(); i++){
-            if (listHolidays.get(i).getText().equals("Shabbat")) counter++;
+            if (listHolidays.get(i).getText().equals(holiday)) counter++;
         }
         return counter == listHolidays.size();
     }

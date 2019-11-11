@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import ru.stqa.selenium.pages.HomePageAuthHelper;
 import ru.stqa.selenium.pages.HomePageHelper;
 import ru.stqa.selenium.pages.LoginPageHelper;
+import ru.stqa.selenium.util.DataProviders;
 
 
 public class LoginPageTests extends TestBase {
@@ -62,9 +63,9 @@ public class LoginPageTests extends TestBase {
 
 
     }
-    @Test
-    public void loginPositiveTest()  {
-        loginPage.loginToTheSystem(LOGIN,PASSWORD);
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "loginPositive")
+    public void loginPositiveTest(String login, String psw)  {
+        loginPage.loginToTheSystem(login, psw);
         homePageAuth.waitUntilPageIsLoaded();
         Assert.assertTrue(homePageAuth.correctPageIsLoaded());
     }
