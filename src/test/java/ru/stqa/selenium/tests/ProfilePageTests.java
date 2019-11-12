@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.selenium.pages.*;
+import ru.stqa.selenium.util.DataProviders;
 
 public class ProfilePageTests extends TestBase {
     ProfilePageHelper profilePage;
@@ -33,13 +34,13 @@ public class ProfilePageTests extends TestBase {
         profilePage.goToTheProfile();
     }
 
-    @Test
-public  void lastNameOfFamilyChanging() {
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "lastNameChanging")
+public  void lastNameOfFamilyChanging(String lastName) {
               //--------------Open in edit mode-------------
        profilePage.openProfileInEditMode()
-                  .lastNameChanging("Petrov")
+                  .lastNameChanging(lastName)
                   .saveProfile();
-       Assert.assertEquals("Petrov", profilePage.getFamilyName());
+       Assert.assertEquals(lastName, profilePage.getFamilyName());
 
         //----------------Go to the family page--------------
        familyPage.goToTheFamilyPage();

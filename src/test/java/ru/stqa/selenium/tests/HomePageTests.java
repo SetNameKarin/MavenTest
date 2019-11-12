@@ -32,10 +32,10 @@ public class HomePageTests extends TestBase {
         Assert.assertTrue(homePage.allEventsBelongToHoliday(holiday));
     }
 
-    @Test
-    public void singleFilterFoodByKosher() {
-        homePage.filterEventsByFoodKosher();
-        Assert.assertTrue(homePage.allEventsBelongToFoodKosher());
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "filterByKosher")
+    public void singleFilterFoodByKosher(String food) {
+        homePage.filterEventsByFood(food);
+        Assert.assertTrue(homePage.allEventsBelongToFoodKosher(food));
     }
 
 

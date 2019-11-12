@@ -75,7 +75,7 @@ public class HomePageHelper extends PageBase {
         return counter == listHolidays.size();
     }
 
-    public void filterEventsByFoodKosher() {
+    public void filterEventsByFood(String food) {
         // -----  wait for select-element (filter by food) and all options being loaded ---
 
         waitUntilElementIsVisible(foodFilter, 30);
@@ -88,22 +88,22 @@ public class HomePageHelper extends PageBase {
 */
 
         // ------ choose filter "kosher" ------
-        selectValueFromList(selectFood, "Kosher");
+        selectValueFromList(selectFood, food);
 
         // ------ wait for filter "kosher" being chosen -----
 
         waitUntilElementIsClickable(clearFilterButton, 20);
-        waitUntilElementIsPresent(By.xpath("//option[@selected][@value = 'Kosher']"),20);
+        waitUntilElementIsPresent(By.xpath("//option[@selected][@value = '"+ food +"']"),20);
 
         // ------ wait for all events by filter "kosher" being loaded ----
         waitUntilAllElementsVisible(foodEventsList, 40);
     }
 
-    public Boolean allEventsBelongToFoodKosher() {
+    public Boolean allEventsBelongToFoodKosher(String food) {
         // --- verify that all food values are "Kosher" ----
         int counter = 0;
         for (WebElement webElement : kosherFoodEvents) {
-            if (webElement.getText().contains("Kosher")) counter++;
+            if (webElement.getText().equals(food)) counter++;
         }
         return counter == kosherFoodEvents.size();
     }

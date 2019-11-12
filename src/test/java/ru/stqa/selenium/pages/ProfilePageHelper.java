@@ -73,6 +73,7 @@ public ProfilePageHelper openProfileInEditMode(){
 
 
     public String getFamilyName(){
+
         return familyName.getText();
     }
 

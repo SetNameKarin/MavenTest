@@ -36,8 +36,7 @@ public class LoginPageHelper extends PageBase {
     }
 
     public Boolean correctPageIsLoaded(){
-      //  return driver.findElement(By.id("clickreg")).getText().contains("registration");
-        return  registrationLink.getText().contains("registration");
+         return  registrationLink.getText().contains("registration");
     }
 
     public LoginPageHelper loginToTheSystem(String login, String psw){
