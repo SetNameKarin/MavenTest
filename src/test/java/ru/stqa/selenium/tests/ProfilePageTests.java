@@ -35,7 +35,8 @@ public class ProfilePageTests extends TestBase {
     }
 
     @Test(dataProviderClass = DataProviders.class, dataProvider = "lastNameChanging")
-public  void lastNameOfFamilyChanging(String lastName) {
+public  void lastNameOfFamilyChanging(String lastName, String lastName2) {
+
               //--------------Open in edit mode-------------
        profilePage.openProfileInEditMode()
                   .lastNameChanging(lastName)
@@ -44,15 +45,15 @@ public  void lastNameOfFamilyChanging(String lastName) {
 
         //----------------Go to the family page--------------
        familyPage.goToTheFamilyPage();
-       Assert.assertEquals("My Family: Petrov", familyPage.getTitle());
+       Assert.assertEquals("My Family: "+lastName, familyPage.getTitle());
 
 
         //---------------Return to the profile---------------
         profilePage.goToTheProfile()
                    .openProfileInEditMode()
-                   .lastNameChanging("Shuster")
+                   .lastNameChanging(lastName2)
                    .saveProfile();
-        Assert.assertEquals("Shuster", profilePage.getFamilyName());
+        Assert.assertEquals(lastName2, profilePage.getFamilyName());
 
 
 

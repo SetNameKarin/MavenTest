@@ -88,8 +88,9 @@ public class DataProviders {
     @DataProvider
     public static Iterator<Object[]> dataProviderSecond() {
         List<Object[]> data = new ArrayList();
-        data.add(new Object[]{"login1", "pssword1"});
-        data.add(new Object[]{"login2", "password2"});
+        data.add(new Object[]{"login1", "psw1"});
+        data.add(new Object[]{"login2", "psw2"});
+        data.add(new Object[]{"login3", "psw3"});
 
         return data.iterator();
     }

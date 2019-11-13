@@ -42,7 +42,7 @@ public class LoginPageTests extends TestBase {
                 "It is not login screen or there is no 'registration' on login screen");
     }
 
-    @Test(dataProviderClass = DataProviders.class, dataProvider = "loginNegative")
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "dataProviderSecond")
     public void loginNegativeTest(String login, String psw)  {
 
         loginPage.loginToTheSystem(login, psw);
