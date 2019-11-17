@@ -18,8 +18,12 @@ public class FamilyPageHelper extends PageBase{
     }
 
     public FamilyPageHelper goToTheFamilyPage(){
+        log.info("-- FamilyPageHelper - goToTheFamilyPage() method was started ");
+        log.info("-- Click the family icon");
         familyIcon.click();
+        log.info("-- Wait until Avatar on family is visible");
         waitUntilElementIsVisible(familyAvaInFamily, 30);
+        log.info("-- Wait until text 'My Family:' is present");
         waitUntilTextPresentInElement(titleProfile, "My Family:", 30 );
         return this;
     }
@@ -27,6 +31,7 @@ public class FamilyPageHelper extends PageBase{
 
 
     public String getTitle(){
+
         return driver.findElement(By.id("titleprofile")).getText();
     }
 

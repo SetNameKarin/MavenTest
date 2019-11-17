@@ -25,12 +25,18 @@ public class LoginPageHelper extends PageBase {
     }
 
     public void waitUntilPageIsLoaded(){
-       waitUntilElementIsClickable(signInButton, 20);
+        log.info("-- LoginPageHelper - waitUntilPageIsLoaded() method was stated");
+        log.info("-- Wait until signInButton is clickable");
+        waitUntilElementIsClickable(signInButton, 20);
     }
 
     public LoginPageHelper  openLoginPage(){
+        log.info("-- LoginPageHelper - openLoginPage() method was stated");
+        log.info("-- Wait until loginIcon is clickable");
         waitUntilElementIsClickable(loginIcon, 20);
+        log.info("-- Click the loginIcon");
         loginIcon.click();
+        log.info("-- Wait until the login form is loaded");
         waitUntilPageIsLoaded();
         return this;
     }
@@ -40,21 +46,26 @@ public class LoginPageHelper extends PageBase {
     }
 
     public LoginPageHelper loginToTheSystem(String login, String psw){
-        //---- Enter incorrect login/psw ---
+        log.info("-- LoginPageHelper - loginToTheSystem()method was stated");
+        log.info("-- Enter incorrect login");
         enterValueToField(loginField, login);
+        log.info("-- Enter incorrect psw (less then 4 characters)");
         enterValueToField(passwordField, psw);
+        log.info("-- Click the signInButton");
         signInButton.click();
         return  this;
     }
 
     public boolean loginToTheSystemIncorrect() {
-        //waitUntilElementIsVisible(By.id("wrongloginorpassword"),10);
+        log.info("-- LoginPageHelper - loginToTheSystemIncorrect()method was stated");
+        log.info("-- Wait until notification about wrong authorization is visible");
         waitUntilElementIsVisible(wrongAuth, 20);
-        //return  driver.findElement(By.id("wrongloginorpassword")).getText().contains("Wrong Authorization");
         return wrongAuth.getText().contains("Wrong Authorization");
     }
 
     public LoginPageHelper closeLoginWindowByX() {
+        log.info("-- LoginPageHelper - closeLoginWindowByX() method was stated");
+        log.info("-- Close the login window by clicking the 'X' button");
         closeByXButton.click();
         return this;
     }

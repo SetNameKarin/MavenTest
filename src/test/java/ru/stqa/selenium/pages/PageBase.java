@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.stqa.selenium.util.LogLog4j;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class PageBase {
     WebDriver driver;
     public static final String LOGIN = "karin";
     public static final String PASSWORD = "12345.com";
+    public static LogLog4j log = new LogLog4j();
 
     PageBase(WebDriver driver){
         this.driver = driver;

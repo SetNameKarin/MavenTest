@@ -34,8 +34,10 @@ public class HomePageHelper extends PageBase {
     }
 
     public HomePageHelper waitUntilPageIsLoaded(){
-
+        log.info("-- HomePageHelper: waitUntilPageIsLoaded() was started");
+        log.info("-- Wait until loginIcon element is clickable");
         waitUntilElementIsClickable(loginIcon, 20);
+        log.info("-- Wait until all events are visible");
         waitUntilAllElementsVisible(eventsList, 20);
         return this;
     }
@@ -48,18 +50,19 @@ public class HomePageHelper extends PageBase {
 
     public HomePageHelper filterEventsByHoliday(String holiday) {
         // ----- to wait that select-element (filter by holiday) and all options are loaded ---
-
+        log.info("-- HomePageHelper: filterEventsByHoliday() (" + holiday +") was stared");
+        log.info("-- To wait that select - element (filter by holiday) and all options are loaded");
         waitUntilElementIsClickable(filterHolidays, 30);
         waitUntilAllElementsVisible(driver.findElements(By.xpath("//select[@name = 'selectholidays']/option")),30);
-
+        log.info("-- Choose filter by holiday " + holiday);
         selectValueFromList(filterHolidays, holiday);
 
-
-        // ------ wait that filter "shabbat" is chosen -----
+        log.info("-- To wait that clearFilterButton is clickable");
         waitUntilElementIsClickable(clearFilterButton,20);
+        log.info("-- to wait that filter by " + holiday + "is chosen");
         waitUntilElementIsPresent(By.xpath("//option[@selected][@value = '"+ holiday + "']"),20);
 
-        // ------ wait that all events by filter "shabbat" are loaded ----
+        log.info("-- To wait that all events are loaded ");
        waitUntilAllElementsVisible(eventsList, 40);
        return  this;
     }
@@ -68,6 +71,7 @@ public class HomePageHelper extends PageBase {
 
     public Boolean allEventsBelongToHoliday(String holiday) {
             // --- verify that all holidays values are "Shabbat" ----
+        log.info("-- HomePageHelper: allEventsBelongToHoliday() was started for holiday- " +holiday);
         int counter = 0;
         for (int i=0; i < listHolidays.size(); i++){
             if (listHolidays.get(i).getText().equals(holiday)) counter++;

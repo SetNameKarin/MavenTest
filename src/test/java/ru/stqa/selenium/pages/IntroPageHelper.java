@@ -14,11 +14,15 @@ public class IntroPageHelper extends PageBase {
     }
 
     public IntroPageHelper waitUntilPageLoaded(){
+        log.info("-- IntroPageHelper - waitUntilPageLoaded() method was started");
+        log.info("-- Wait until closeIntro button is clickable");
         waitUntilElementIsClickable(closeIntro, 30);
         return this;
     }
 
     public IntroPageHelper closeIntroPage(){
+        log.info("-- IntroPageHelper - closeIntroPage() method was started");
+        log.info("-- Close intro page");
         closeIntro.click();
         return this;
     }
