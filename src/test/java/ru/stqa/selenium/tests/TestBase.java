@@ -1,12 +1,15 @@
 package ru.stqa.selenium.tests;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.Capabilities;
+import com.google.common.io.Files;
+import org.openqa.selenium.*;
 
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -32,11 +35,41 @@ public class TestBase {
   public static LogLog4j log = new LogLog4j();
 
 
-  protected WebDriver driver;
+  protected EventFiringWebDriver driver;
+  public  static class  MyListener extends AbstractWebDriverEventListener{
+    @Override
+    public void beforeFindBy(By by, WebElement element, WebDriver driver) {
+      super.beforeFindBy(by, element, driver);
+      log.info("***Try to find: " + by);
+    }
+
+    @Override
+    public void afterFindBy(By by, WebElement element, WebDriver driver) {
+      super.afterFindBy(by, element, driver);
+      log.info("****Found by: " + by);
+    }
+
+    @Override
+    public void onException(Throwable throwable, WebDriver driver) {
+      super.onException(throwable, driver);
+      log.error("*** Exception: " + throwable);
+      File tmp = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+      File screen = new File("screen - " + System.currentTimeMillis() + ".png");
+      try {
+        Files.copy(tmp, screen);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      log.info("See screen in file: " + screen);
+    }
+
+
+
+  }
 
   @BeforeSuite
   public void initTestSuite() throws IOException {
-    log.info("-- @BeforeSuite-- initTestSuite() was started");
+    log.info("-- TestBase - @BeforeSuite-- initTestSuite() was started");
     SuiteConfiguration config = new SuiteConfiguration();
     baseUrl = config.getProperty("site.url");
     if (config.hasProperty("grid.url") && !"".equals(config.getProperty("grid.url"))) {
@@ -49,7 +82,8 @@ public class TestBase {
   public void initWebDriver() {
     log.info("-- @BeforeMethod-- initWebDriver() was started");
     log.info("- driver was defined");
-    driver = WebDriverPool.DEFAULT.getDriver(gridHubUrl, capabilities);
+    driver = new EventFiringWebDriver(WebDriverPool.DEFAULT.getDriver(gridHubUrl, capabilities));
+    driver.register(new MyListener());
     log.info("- System was opened by url - " + baseUrl);
     driver.get(baseUrl);
     log.info("- Open browser, fullscreen");
